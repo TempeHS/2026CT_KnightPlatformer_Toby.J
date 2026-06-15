@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
 {
     Rigidbody2D playerRb;
     Vector2 startPos;
+    Vector3 originalScale;
 
     private void Awake()
     {
@@ -15,6 +16,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         startPos = transform.position;
+        originalScale = transform.localScale;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -32,12 +34,12 @@ public class GameController : MonoBehaviour
 
     IEnumerator Respawn(float duration)
     {
-        playerRb.linearVelocity = new Vector2(0, 0);
+        playerRb.linearVelocity = Vector2.zero;
         playerRb.simulated = false;
-        transform.localScale = new Vector3(0, 0, 0);
+        transform.localScale = Vector3.zero;
         yield return new WaitForSeconds(duration);
         transform.position = startPos;
-        transform.localScale = new Vector3(1, 1, 1);
+        transform.localScale = originalScale;
         playerRb.simulated = true;
     }
 }
